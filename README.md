@@ -1,5 +1,5 @@
 
-        
+
 
 # Levantar el proyecto 
 
@@ -27,3 +27,8 @@ docker compose down
 docker exec -it 'nombre del contenedor' mogosh -u 'nombre de usuario' -p 'password del usuario'
 ```
 
+# Generar Archivo de configuracion propio de Typescript
+
+```bash
+npx tsc --init
+```
