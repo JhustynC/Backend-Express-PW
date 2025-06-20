@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsx src/app.ts"
+    "start": "tsx watch src/app.ts"
   },
   "keywords": [],
   "author": "Jhustyn Carvajal, Leandro Freire, Jorge Buelvas",
@@ -12,17 +12,21 @@
   "description": "Backend side of the fullstack porject",
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
+    "@types/cors": "^2.8.19",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "env-var": "^7.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.0",
+    "morgan": "^1.10.0",
     "multer": "^2.0.1"
   },
   "devDependencies": {
-    "@types/multer": "^1.4.13",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/multer": "^1.4.13",
     "@types/node": "^24.0.3",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.20.3",

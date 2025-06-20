@@ -1,5 +1,7 @@
 import express, { Router } from "express";
 import * as http from "http";
+import cors from "cors";
+import morgan from "morgan";
 
 export interface ServerOptions{
     port: number;
@@ -19,12 +21,20 @@ export class Server {
 
     public async start() {
         
-        //* Middlewares        
+        //* Middlewares     
+        this.app.use(morgan("dev")); 
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
 
         //* Routes
         this.app.use(this.routes);
+
+        //* Cors
+        this.app.use(cors({
+            origin: '*',
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            allowedHeaders: ['Content-Type', 'Authorization']
+        }));
 
         //* Start Server
         this.http = this.app.listen(this.port, ()=> {

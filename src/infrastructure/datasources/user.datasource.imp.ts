@@ -21,9 +21,21 @@ export class UserDatasourceImp implements AbsUserDatasource{
     }
 
     async updateUser(updateUserDto: UpdateUserDto): Promise<UserEntity | undefined> {
-        const { email, ...updateFields } = updateUserDto;
+        // currentEmail es el email actual del usuario (viene de la URL o del DTO)
+        const currentEmail = updateUserDto.email;
+        const newEmail = updateUserDto.newEmail;
+
+        // Construir los campos a actualizar
+        const updateFields: any = { ...updateUserDto.values };
+
+        // Si se quiere cambiar el email, verificar que el nuevo email no esté en uso
+        if (newEmail && newEmail !== currentEmail) {
+            const exists = await UserModel.findOne({ email: newEmail });
+            if (exists) throw new Error("The new email is already in use");
+        }
+
         const updatedUser = await UserModel.findOneAndUpdate(
-            { email },
+            { email: currentEmail },
             { $set: updateFields },
             { new: true }
         );
