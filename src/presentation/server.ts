@@ -1,7 +1,9 @@
-import express, { Router } from "express";
+import express, { Router, Request, Response, NextFunction } from "express";
 import * as http from "http";
 import cors from "cors";
 import morgan from "morgan";
+import compression from "compression";
+import helmet from "helmet";
 
 export interface ServerOptions{
     port: number;
@@ -25,6 +27,8 @@ export class Server {
         this.app.use(morgan("dev"));
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
+        this.app.use(compression());
+        this.app.use(helmet());
 
         //* Routes
         this.app.use(this.routes);
@@ -35,6 +39,19 @@ export class Server {
             methods: ['GET', 'POST', 'PUT', 'DELETE'],
             allowedHeaders: ['Content-Type', 'Authorization']
         }));
+
+        //* Error Handling
+        this.app.use(
+            (err: any, req: Request, res: Response, next: NextFunction) => {
+                console.error(err);
+                res.status(500).json({ message: "Internal Server Error" });
+            }
+        );
+
+        //* 404 Handling
+        this.app.use((req, res) => {
+            res.status(404).json({ message: "Not Found" });
+        });
 
         //* Start Server
         this.http = this.app.listen(this.port, ()=> {
