@@ -1,9 +1,11 @@
-import { hash } from "crypto";
+// import { createHash, hash } from "crypto";
 import mongoose from "mongoose";
-const crypto = await import('crypto');
+import { createHash } from "@/shared/helpers/hashPassword.helper";
+import { checkPassword } from "@/shared/helpers/checkPassword.helper";
 
+// To create User Schema in Mongo
 const userSchema = new mongoose.Schema({
-    userName: {type: String, required: true},
+    username: {type: String, required: true},
     password: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     lastSeen: {type: Date, default: Date.now()}
@@ -11,13 +13,14 @@ const userSchema = new mongoose.Schema({
 
 // Middleware to intercept save operations and hash the password before storing
 userSchema.pre('save', async function (next) {
-    if (this.isModified && this.isModified("password")) {
-        
-        // Use a strong hash function with a salt for a long hash (e.g., sha512)
-        const salt = crypto.randomBytes(16).toString('hex');
-        const hash = crypto.createHmac('sha512', salt).update(this.password).digest('hex');
-        const hashed = `${salt}:${hash}`;
-        this.password = hashed;
+    if (this.isModified && this.isModified("password")) {             
+        this.password = await createHash(this.password);
     }
     next();
 });
+
+userSchema.methods.correctPassword = async function(storeHash: string, password: string, ){
+    return await checkPassword(storeHash, password);
+}
+
+export const  UserModel = mongoose.model("User", userSchema);

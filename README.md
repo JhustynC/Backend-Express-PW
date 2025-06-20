@@ -1,5 +1,5 @@
 
-
+        
 
 # Levantar el proyecto 
 
@@ -7,6 +7,11 @@
 npm run dev
 ```
 
+# En producción
+
+```bash
+npm start
+```
 
 # Comandos para docker-compose
 
