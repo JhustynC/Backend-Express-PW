@@ -22,7 +22,7 @@ export class Server {
     public async start() {
         
         //* Middlewares     
-        this.app.use(morgan("dev")); 
+        this.app.use(morgan("dev"));
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
 

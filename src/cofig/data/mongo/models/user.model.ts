@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { createHash } from "@/shared/helpers/hashPassword.helper";
 import { checkPassword } from "@/shared/helpers/checkPassword.helper";
 
-// To create User Schema in Mongo
+//* To create User Schema in Mongo
 const userSchema = new mongoose.Schema({
     username: {type: String, required: true},
     password: {type: String, required: true},
