@@ -12,16 +12,15 @@ export class UserRepositoryImp implements AbsUserRepository{
         return this.datasource.saveUser(user);
     }
     getByEmail(email: string): Promise<UserEntity | undefined> {
-        return this.getByEmail(email);
+        return this.datasource.getByEmail(email);
     }
     getAll(): Promise<UserEntity[]> {
-        return this.getAll();
+        return this.datasource.getAll();
     }
     updateUser(updateUserDto: UpdateUserDto): Promise<UserEntity | undefined> {
-        return this.updateUser(updateUserDto);
+        return this.datasource.updateUser(updateUserDto);
     }
     deleteUser(email: string): Promise<UserEntity> {
-        return this.deleteUser(email);
+        return this.datasource.deleteUser(email);
     }
-
 }
